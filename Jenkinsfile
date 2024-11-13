@@ -8,7 +8,6 @@ pipeline {
     }
 
     stages {
-<<<<<<< Updated upstream
         
         stage('Construir Pedidos') {
             steps {
@@ -21,9 +20,6 @@ pipeline {
         
 
         stage('saludar') {
-=======
-        stage('Git Config') {
->>>>>>> Stashed changes
             steps {
                 script {
                     try {
