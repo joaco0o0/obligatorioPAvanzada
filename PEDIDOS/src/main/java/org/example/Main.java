@@ -9,7 +9,7 @@ public class Main {
         ProcesadorPedidos procesador = new ProcesadorPedidos();
 
         // Crear y procesar 50 pedidos
-        for (int i = 1; i <= 200; i++) {
+        for (int i = 1; i <= 50; i++) {
             boolean esUrgente = (i % 5 == 0); // Cada quinto pedido es urgente
             Pedido pedido = new Pedido(i, esUrgente);
             procesador.procesarPedido(pedido);
