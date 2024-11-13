@@ -9,8 +9,14 @@ pipeline {
 
     stages {
         
-    
-
+        stage('Construir Pedidos') {
+            steps {
+                dir("${PEDIDOS_DIR}") {
+                    echo 'Construyendo módulo Pedidos...'
+                    sh 'mvn clean install -DskipTests'
+                }
+            }
+        }
         
 
         stage('saludar') {
