@@ -5,21 +5,32 @@ pipeline {
         TRIVIA_DIR = 'TRIVIA'
         PEDIDOS_DIR = 'PEDIDOS'
         USQL_DIR = 'USQL'
+        GITHUB_REPO = 'https://github.com/joaco0o0/obligatorioPAvanzada.git'
+        GITHUB_BRANCH = 'main'
     }
 
     stages {
-        
-        stage('Construir Pedidos') {
+        stage('Checkout') {
             steps {
-                dir("${PEDIDOS_DIR}") {
-                    echo 'Construyendo módulo Pedidos...'
-                    sh 'mvn clean install -DskipTests'
+                script {
+                    try {
+                        echo 'Checking out GitHub repository...'
+                        checkout([
+                            $class: 'GitSCM',
+                            branches: [[name: "*/${GITHUB_BRANCH}"]],
+                            userRemoteConfigs: [[
+                                url: "${GITHUB_REPO}",
+                                credentialsId: 'github-credentials'
+                            ]]
+                        ])
+                    } catch (Exception e) {
+                        error "GitHub checkout failed: ${e.getMessage()}"
+                    }
                 }
             }
         }
-        
 
-        stage('saludar') {
+        stage('Git Config') {
             steps {
                 script {
                     try {
@@ -27,7 +38,6 @@ pipeline {
                         bat 'git config --global --list'
                     } catch (Exception e) {
                         echo "Warning: Git configuration failed: ${e.getMessage()}"
-                        // Continue pipeline execution even if Git config fails
                     }
                 }
             }
@@ -90,12 +100,32 @@ pipeline {
                 }
             }
         }
+
+        stage('Security Scan') {
+            steps {
+                script {
+                    try {
+                        echo 'Running security scan...'
+                        dependencyCheck(
+                            additionalArguments: '--format HTML --format XML',
+                            odcInstallation: 'OWASP-Dependency-Check',
+                            skipOnScmChange: false,
+                            skipOnUpstreamChange: false
+                        )
+                    } catch (Exception e) {
+                        error "Security scan failed: ${e.getMessage()}"
+                    }
+                }
+            }
+        }
     }
 
     post {
         always {
             echo 'Limpiando workspace...'
             cleanWs()
+            // Publish dependency check results
+            dependencyCheckPublisher()
         }
         success {
             echo 'Pipeline ejecutado exitosamente'
@@ -104,5 +134,4 @@ pipeline {
             echo 'Pipeline falló'
         }
     }
-    //time to push
 }
