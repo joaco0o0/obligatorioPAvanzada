@@ -48,7 +48,7 @@ pipeline {
                 script {
                     try {
                         echo 'Compilando...'
-                        bat './gradlew clean build'
+                        bat 'gradlew.bat clean build'
                     } catch (Exception e) {
                         error "Error en compilación: ${e.getMessage()}"
                     }
@@ -62,7 +62,7 @@ pipeline {
                     try {
                         dir("${TRIVIA_DIR}") {
                             echo 'Construyendo módulo Trivia...'
-                            bat './gradlew clean build -x test'
+                            bat 'gradlew.bat clean build -x test'
                         }
                     } catch (Exception e) {
                         error "Error en construcción de Trivia: ${e.getMessage()}"
@@ -77,7 +77,7 @@ pipeline {
                     try {
                         dir("${PEDIDOS_DIR}") {
                             echo 'Construyendo módulo Pedidos...'
-                            bat './gradlew clean build -x test'
+                            bat 'gradlew.bat clean build -x test'
                         }
                     } catch (Exception e) {
                         error "Error en construcción de Pedidos: ${e.getMessage()}"
@@ -92,7 +92,7 @@ pipeline {
                     try {
                         dir("${USQL_DIR}") {
                             echo 'Construyendo módulo USQL...'
-                            bat './gradlew clean build -x test'
+                            bat 'gradlew.bat clean build -x test'
                         }
                     } catch (Exception e) {
                         error "Error en construcción de USQL: ${e.getMessage()}"
