@@ -4,7 +4,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    def projects = ['Pedidos', 'USQL', 'TRIVIA']
+                    def projects = ['PEDIDOS', 'USQL', 'TRIVIA']
                     for (project in projects) {
                         dir(project) {
                             echo "Building $project"
