@@ -48,10 +48,9 @@ pipeline {
                 script {
                     try {
                         echo 'Compilando...'
-                        echo "%Path%"
-                        echo "%PATH%"
-                        bat "echo %Path%"
-                        bat "echo %PATH%"
+                        dir('C:\Users\MARIO\Desktop\Escritorio\2024\Segundo_Semestre\ProgAvz\EntregaFinal\obligatorioPAvanzada') {
+                            bat 'mvn clean install -DskipTests'
+                        }
                         bat 'mvn clean install -DskipTests'
                     } catch (Exception e) {
                         error "Error en compilación: ${e.getMessage()}"
