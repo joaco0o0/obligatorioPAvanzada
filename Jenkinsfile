@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     // Cambiar al directorio del proyecto seleccionado
-                    dir("PA_Final/${params.PROJECT}") {
+                    dir("obligatorioPAvanzada/${params.PROJECT}") {
                         // Verificar cuál es el proyecto seleccionado y ejecutar los comandos correspondientes
                         if (params.PROJECT == 'usql') {
                             echo "Instalando dependencias para USQL..."
