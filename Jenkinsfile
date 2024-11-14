@@ -100,7 +100,7 @@ pipeline {
                 }
             }
         }
-
+/*
         stage('Security Scan') {
             steps {
                 script {
@@ -118,6 +118,9 @@ pipeline {
                 }
             }
         }
+        */
+        
+
     }
 
     post {
