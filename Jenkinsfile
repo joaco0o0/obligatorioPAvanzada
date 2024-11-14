@@ -7,15 +7,7 @@ pipeline {
     }
 
     stages {
-        // Instalar dependencias según el proyecto seleccionado
-        stage('Verificar Python') {
-            steps {
-                script {
-                    bat('where python') // Muestra la ruta de python.exe encontrada
-                    bat('python --version')
-                }
-            }
-        }
+
 
         stage('Instalar dependencias') {
             steps {
