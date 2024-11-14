@@ -1,108 +1,102 @@
 pipeline {
     agent any
 
-    environment {
-        TRIVIA_DIR = 'TRIVIA'
-        PEDIDOS_DIR = 'PEDIDOS'
-        USQL_DIR = 'USQL'
+    // Parámetro para seleccionar el proyecto a construir
+    parameters {
+        choice(name: 'PROJECT', choices: ['usql', 'pedidos', 'trivia'], description: 'Seleccione el proyecto a ejecutar')
     }
 
     stages {
-        
-        stage('Construir Pedidos') {
-            steps {
-                dir("${PEDIDOS_DIR}") {
-                    echo 'Construyendo módulo Pedidos...'
-                    sh 'mvn clean install -DskipTests'
-                }
-            }
-        }
-        
-
-        stage('saludar') {
+        // Instalar dependencias según el proyecto seleccionado
+        stage('Instalar dependencias') {
             steps {
                 script {
-                    try {
-                        bat 'git config --global core.autocrlf true'
-                        bat 'git config --global --list'
-                    } catch (Exception e) {
-                        echo "Warning: Git configuration failed: ${e.getMessage()}"
-                        // Continue pipeline execution even if Git config fails
-                    }
-                }
-            }
-        }
+                    // Cambiar al directorio del proyecto seleccionado
+                    dir("PA_Final/${params.PROJECT}") {
+                        // Verificar cuál es el proyecto seleccionado y ejecutar los comandos correspondientes
+                        if (params.PROJECT == 'usql') {
+                            echo "Instalando dependencias para USQL..."
+                            sh('python3 -m pip install ply') // Instalar PLY para análisis léxico
 
-        stage('Compilar') {
-            steps {
-                script {
-                    try {
-                        echo 'Compilando...'
-                        bat './gradlew clean build'
-                    } catch (Exception e) {
-                        error "Error en compilación: ${e.getMessage()}"
-                    }
-                }
-            }
-        }
+                        } else if (params.PROJECT == 'trivia') {
+                            echo "Instalando dependencias para Trivia..."
+                            sh('python3 -m pip install pandas') // Instalar Pandas para manejo de datos
 
-        stage('Construir Trivia') {
-            steps {
-                script {
-                    try {
-                        dir("${TRIVIA_DIR}") {
-                            echo 'Construyendo módulo Trivia...'
-                            bat './gradlew clean build -x test'
+                        } else if (params.PROJECT == 'pedidos') {
+                            echo "No se requieren dependencias adicionales para Pedidos"
                         }
-                    } catch (Exception e) {
-                        error "Error en construcción de Trivia: ${e.getMessage()}"
                     }
                 }
             }
         }
 
-        stage('Construir Pedidos') {
+        // Compilar y construir el proyecto seleccionado
+        stage('Build') {
             steps {
                 script {
-                    try {
-                        dir("${PEDIDOS_DIR}") {
-                            echo 'Construyendo módulo Pedidos...'
-                            bat './gradlew clean build -x test'
+                    dir("PA_Final/${params.PROJECT}") {
+                        echo "Construyendo el proyecto ${params.PROJECT}..."
+
+                        // Ejecutar comandos específicos para cada proyecto
+                        if (params.PROJECT == 'usql') {
+                            sh('python3 main.py') // Ejecutar el script principal de USQL
+
+                        } else if (params.PROJECT == 'pedidos') {
+                            sh('javac -Xlint:unchecked Main.java') // Compilar el proyecto Java
+                            sh('java Main') // Ejecutar el proyecto Java
+
+                        } else if (params.PROJECT == 'trivia') {
+                            sh('python3 main.py') // Ejecutar el script principal de Trivia
                         }
-                    } catch (Exception e) {
-                        error "Error en construcción de Pedidos: ${e.getMessage()}"
                     }
                 }
             }
         }
 
-        stage('Construir USQL') {
+        // Ejecutar pruebas para el proyecto seleccionado
+        stage('Test') {
             steps {
                 script {
-                    try {
-                        dir("${USQL_DIR}") {
-                            echo 'Construyendo módulo USQL...'
-                            bat './gradlew clean build -x test'
+                    dir("obligatorioPAvanzada/${params.PROJECT}") {
+                        echo "Ejecutando pruebas para el proyecto ${params.PROJECT}..."
+
+                        // Ejecutar pruebas específicas según el proyecto
+                        if (params.PROJECT == 'USQL') {
+                            sh('python3 Test.py') // Ejecutar pruebas para USQL
+
+                        } else if (params.PROJECT == 'TRIVIA') {
+                            sh('python3 -m unittest') // Ejecutar pruebas unitarias para Trivia
+
+                        } else if (params.PROJECT == 'PEDIDOS') {
+                            echo "No se definieron pruebas para Pedidos"
                         }
-                    } catch (Exception e) {
-                        error "Error en construcción de USQL: ${e.getMessage()}"
+                    }
+                }
+            }
+        }
+
+        // Despliegue del proyecto seleccionado
+        stage('Deploy') {
+            steps {
+                script {
+                    dir("obligatorioPAvanzada/${params.PROJECT}") {
+                        echo "Desplegando el proyecto ${params.PROJECT}..."
+
+                        // Ejecutar comandos de despliegue según el proyecto
+                        if (params.PROJECT == 'USQL') {
+                            echo "Despliegue para USQL no implementado aún"
+
+                        } else if (params.PROJECT == 'TRIVIA') {
+                            echo "Despliegue para Trivia no implementado aún"
+
+                        } else if (params.PROJECT == 'PEDIDOS') {
+                            echo "Despliegue para Pedidos no implementado aún"
+                        }
                     }
                 }
             }
         }
     }
 
-    post {
-        always {
-            echo 'Limpiando workspace...'
-            cleanWs()
-        }
-        success {
-            echo 'Pipeline ejecutado exitosamente'
-        }
-        failure {
-            echo 'Pipeline falló'
-        }
-    }
-    //time to push
+
 }
