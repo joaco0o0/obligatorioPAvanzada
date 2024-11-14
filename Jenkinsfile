@@ -49,6 +49,9 @@ pipeline {
                     try {
                         echo 'Compilando...'
                         echo "%Path%"
+                        echo "%PATH%"
+                        bat "echo %Path%"
+                        bat "echo %PATH%"
                         bat 'mvn clean install -DskipTests'
                     } catch (Exception e) {
                         error "Error en compilación: ${e.getMessage()}"
