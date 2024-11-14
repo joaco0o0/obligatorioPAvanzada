@@ -48,6 +48,7 @@ pipeline {
                 script {
                     try {
                         echo 'Compilando...'
+                        echo "%Path%"
                         bat 'mvn clean install -DskipTests'
                     } catch (Exception e) {
                         error "Error en compilación: ${e.getMessage()}"
@@ -92,6 +93,7 @@ pipeline {
                     try {
                         dir("${USQL_DIR}") {
                             echo 'Construyendo módulo USQL...'
+                    
                             bat 'mvn clean package -DskipTests'
                         }
                     } catch (Exception e) {
