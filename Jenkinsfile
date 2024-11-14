@@ -17,11 +17,11 @@ pipeline {
                         // Verificar cuál es el proyecto seleccionado y ejecutar los comandos correspondientes
                         if (params.PROJECT == 'usql') {
                             echo "Instalando dependencias para USQL..."
-                            bat ('python3 -m pip install ply') // Instalar PLY para análisis léxico
+                            bat ('python -m pip install ply') // Instalar PLY para análisis léxico
 
                         } else if (params.PROJECT == 'trivia') {
                             echo "Instalando dependencias para Trivia..."
-                            bat('python3 -m pip install pandas') // Instalar Pandas para manejo de datos
+                            bat('python -m pip install pandas') // Instalar Pandas para manejo de datos
 
                         } else if (params.PROJECT == 'pedidos') {
                             echo "No se requieren dependencias adicionales para Pedidos"
