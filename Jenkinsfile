@@ -100,39 +100,5 @@ pipeline {
                 }
             }
         }
-/*
-        stage('Security Scan') {
-            steps {
-                script {
-                    try {
-                        echo 'Running security scan...'
-                        dependencyCheck(
-                            additionalArguments: '--format HTML --format XML',
-                            odcInstallation: 'OWASP-Dependency-Check',
-                            skipOnScmChange: false,
-                            skipOnUpstreamChange: false
-                        )
-                    } catch (Exception e) {
-                        error "Security scan failed: ${e.getMessage()}"
-                    }
-                }
-            }
-        }
-        */
-    }
-
-    post {
-        always {
-            echo 'Limpiando workspace...'
-            cleanWs()
-            // Publish dependency check results
-            dependencyCheckPublisher()
-        }
-        success {
-            echo 'Pipeline ejecutado exitosamente'
-        }
-        failure {
-            echo 'Pipeline falló'
-        }
     }
 }
