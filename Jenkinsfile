@@ -17,7 +17,7 @@ pipeline {
                         // Verificar cuál es el proyecto seleccionado y ejecutar los comandos correspondientes
                         if (params.PROJECT == 'usql') {
                             echo "Instalando dependencias para USQL..."
-                            bat ('pyt3hon -m pip install ply') // Instalar PLY para análisis léxico
+                            bat ('python3 -m pip install ply') // Instalar PLY para análisis léxico
 
                         } else if (params.PROJECT == 'trivia') {
                             echo "Instalando dependencias para Trivia..."
