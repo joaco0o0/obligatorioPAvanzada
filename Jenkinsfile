@@ -34,18 +34,18 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    dir("PA_Final/${params.PROJECT}") {
+                    dir("obligatorioPAvanzada/${params.PROJECT}") {
                         echo "Construyendo el proyecto ${params.PROJECT}..."
 
                         // Ejecutar comandos específicos para cada proyecto
-                        if (params.PROJECT == 'usql') {
+                        if (params.PROJECT == 'USQL') {
                             bat('python3 main.py') // Ejecutar el script principal de USQL
 
-                        } else if (params.PROJECT == 'pedidos') {
+                        } else if (params.PROJECT == 'PEDIDOS') {
                             bat('javac -Xlint:unchecked Main.java') // Compilar el proyecto Java
                             bat('java Main') // Ejecutar el proyecto Java
 
-                        } else if (params.PROJECT == 'trivia') {
+                        } else if (params.PROJECT == 'TRIVIA') {
                             bat('python3 main.py') // Ejecutar el script principal de Trivia
                         }
                     }
