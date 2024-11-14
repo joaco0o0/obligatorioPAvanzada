@@ -16,11 +16,11 @@ pipeline {
                         // Verificar cuál es el proyecto seleccionado y ejecutar los comandos correspondientes
                         if (params.PROJECT == 'usql') {
                             echo "Instalando dependencias para USQL..."
-                            sh('python3 -m pip install ply') // Instalar PLY para análisis léxico
+                            bat ('python3 -m pip install ply') // Instalar PLY para análisis léxico
 
                         } else if (params.PROJECT == 'trivia') {
                             echo "Instalando dependencias para Trivia..."
-                            sh('python3 -m pip install pandas') // Instalar Pandas para manejo de datos
+                            bat('python3 -m pip install pandas') // Instalar Pandas para manejo de datos
 
                         } else if (params.PROJECT == 'pedidos') {
                             echo "No se requieren dependencias adicionales para Pedidos"
@@ -39,14 +39,14 @@ pipeline {
 
                         // Ejecutar comandos específicos para cada proyecto
                         if (params.PROJECT == 'usql') {
-                            sh('python3 main.py') // Ejecutar el script principal de USQL
+                            bat('python3 main.py') // Ejecutar el script principal de USQL
 
                         } else if (params.PROJECT == 'pedidos') {
-                            sh('javac -Xlint:unchecked Main.java') // Compilar el proyecto Java
-                            sh('java Main') // Ejecutar el proyecto Java
+                            bat('javac -Xlint:unchecked Main.java') // Compilar el proyecto Java
+                            bat('java Main') // Ejecutar el proyecto Java
 
                         } else if (params.PROJECT == 'trivia') {
-                            sh('python3 main.py') // Ejecutar el script principal de Trivia
+                            bat('python3 main.py') // Ejecutar el script principal de Trivia
                         }
                     }
                 }
@@ -62,10 +62,10 @@ pipeline {
 
                         // Ejecutar pruebas específicas según el proyecto
                         if (params.PROJECT == 'USQL') {
-                            sh('python3 Test.py') // Ejecutar pruebas para USQL
+                            bat('python3 Test.py') // Ejecutar pruebas para USQL
 
                         } else if (params.PROJECT == 'TRIVIA') {
-                            sh('python3 -m unittest') // Ejecutar pruebas unitarias para Trivia
+                            bat('python3 -m unittest') // Ejecutar pruebas unitarias para Trivia
 
                         } else if (params.PROJECT == 'PEDIDOS') {
                             echo "No se definieron pruebas para Pedidos"
