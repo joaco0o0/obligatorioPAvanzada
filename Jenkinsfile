@@ -5,9 +5,9 @@ pipeline {
         stage('Build PEDIDOS') {
             steps {
                 script {
-                    echo "Construyendo el proyecto PEDIDOS"
+                    echo "Construyendo el proyecto PEDIDOS en Windows"
                     dir('PEDIDOS') {
-                        sh './gradlew build'
+                        bat 'gradlew.bat build'
                     }
                 }
             }
@@ -18,7 +18,7 @@ pipeline {
                 script {
                     echo "Ejecutando pruebas para TRIVIA"
                     dir('TRIVIA') {
-                        sh 'python3 -m unittest tests.py'
+                        bat 'python -m unittest tests.py'
                     }
                 }
             }
@@ -29,7 +29,7 @@ pipeline {
                 script {
                     echo "Ejecutando pruebas para USQL"
                     dir('USQL') {
-                        sh 'python3 -m unittest tests.py'
+                        bat 'python -m unittest tests.py'
                     }
                 }
             }
@@ -38,9 +38,9 @@ pipeline {
         stage('Clean Up') {
             steps {
                 script {
-                    echo "Limpiando archivos temporales"
-                    sh 'find . -name "*.pyc" -exec rm -f {} +'
-                    sh './gradlew clean'
+                    echo "Limpiando archivos temporales en Windows"
+                    bat 'del /s /q *.pyc'
+                    bat 'gradlew.bat clean'
                 }
             }
         }
