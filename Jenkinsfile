@@ -31,8 +31,15 @@ pipeline {
                     } 
                     else if (params.PROJECT == 'PEDIDOS') {
                         echo "Compilando y ejecutando PEDIDOS..."
-                        bat('javac -Xlint:unchecked C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Main.java')
-                        bat('java -cp C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java org.example.Main')
+
+                        bat """
+                            javac -Xlint:unchecked -d C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\out ^
+                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Main.java ^
+                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\ProcesadorPedidos.java ^
+                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Pedido\\Pedido.java
+                        """
+
+                        bat('java -cp C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\out org.example.Main')
                     }
                     else if (params.PROJECT == 'TRIVIA') {
                         echo "Ejecutando TRIVIA..."
@@ -45,7 +52,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo "Desplegando el proyecto ${params.PROJECT}..."
-                // Aquí puedes agregar los pasos específicos de despliegue si es necesario
             }
         }
     }
