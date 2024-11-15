@@ -8,7 +8,7 @@ pipeline {
                     for (project in projects) {
                         dir(project) {
                             echo "Building $project"
-                            sh "mvn clean package"
+                            bat "mvn clean package"
                         }
                     }
                 }
