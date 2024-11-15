@@ -9,6 +9,17 @@ pipeline {
                 git url: 'https://github.com/joaco0o0/obligatorioPAvanzada.git', branch: 'main'
             }
         }
+        stage('Instalar dependencias') {
+                steps {
+                    script {
+                        dir ("PA_Final/${params.PROJECT}"){
+                            if (params.PROJECT == 'UDSL') {
+                                sh('python -m pip install ply')
+
+                            } 
+                        }
+                    }
+                }
 
         stage('Build') {
             steps {
