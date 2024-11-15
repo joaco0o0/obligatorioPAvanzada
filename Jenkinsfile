@@ -9,18 +9,15 @@ pipeline {
                 git url: 'https://github.com/joaco0o0/obligatorioPAvanzada.git', branch: 'main'
             }
         }
-        stage('Instalar dependencias') {
-                steps {
-                    script {
-                        dir ("/${params.PROJECT}"){
-                            if (params.PROJECT == 'TRIVIA') {
-                                bat ('python -m pip install pandas')
-                                bat('dir TRIVIA')
 
-                            } 
-                        }
+        stage('Instalar dependencias') {
+            steps {
+                script {
+                    if (params.PROJECT == 'TRIVIA' || params.PROJECT == 'USQL') {
+                        bat ('python -m pip install pandas')
                     }
                 }
+            }
         }
 
         stage('Build') {
@@ -28,25 +25,18 @@ pipeline {
                 script {
                     echo "Directorio actual: ${pwd()}"
 
-                    // Entrar al directorio obligatorioPAvanzada antes de acceder al proyecto
-                    dir("${params.PROJECT}") {
-
-                        echo "Contenido del directorio ${params.PROJECT}:"
-                        bat('dir /B')
-
-                        echo "Construyendo el proyecto ${params.PROJECT}..."
-
-                        if (params.PROJECT == 'USQL') {
-                            bat('python tests.py')
-                        } 
-                        else if (params.PROJECT == 'PEDIDOS') {
-                            // Compilar y ejecutar Main.java
-                            bat('javac -Xlint:unchecked src\\main\\java\\org\\example\\Main.java')
-                            bat('java -cp src\\main\\java org.example.Main')
-                        }
-                        else if (params.PROJECT == 'TRIVIA') {
-                            bat('python main.py')
-                        }
+                    if (params.PROJECT == 'USQL') {
+                        echo "Ejecutando tests para USQL..."
+                        bat('python C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\USQL\\tests.py')
+                    } 
+                    else if (params.PROJECT == 'PEDIDOS') {
+                        echo "Compilando y ejecutando PEDIDOS..."
+                        bat('javac -Xlint:unchecked C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Main.java')
+                        bat('java -cp C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java org.example.Main')
+                    }
+                    else if (params.PROJECT == 'TRIVIA') {
+                        echo "Ejecutando TRIVIA..."
+                        bat('python C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\TRIVIA\\main.py')
                     }
                 }
             }
@@ -54,12 +44,8 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                script {
-                    dir("obligatorioPAvanzada/${params.PROJECT}") {
-                        echo "Desplegando el proyecto ${params.PROJECT}..."
-                        // Agrega aquí los pasos para desplegar tu proyecto
-                    }
-                }
+                echo "Desplegando el proyecto ${params.PROJECT}..."
+                // Aquí puedes agregar los pasos específicos de despliegue si es necesario
             }
         }
     }
