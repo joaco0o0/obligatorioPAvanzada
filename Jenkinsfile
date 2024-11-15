@@ -5,8 +5,10 @@ pipeline {
         JAVA_HOME = "C:/Program Files/Java/jdk-21" 
         PATH = "${JAVA_HOME}/bin;${env.PATH}"
     }
+    stages {
+        
 
-     stage('Instalar dependencias') {
+        stage('Instalar dependencias') {
                 steps {
                     script {
                         dir ("PA_Final/${params.PROJECT}"){
@@ -22,4 +24,6 @@ pipeline {
                     }
                 }
 
+        }   
+    }
 }
