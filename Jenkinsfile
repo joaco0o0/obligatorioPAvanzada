@@ -47,6 +47,16 @@ pipeline {
                 }
             }
         }
+        stage('Deploy') {
+            steps {
+                script {
+                    dir("obligatorioPAvanzada/${params.PROJECT}") {
+                        echo "Desplegando el proyecto ${params.PROJECT}..."
+                    }
+                }
+            }
+        }
+
    
     }
 }
