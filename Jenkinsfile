@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/tu-usuario/obligatorioPAvanzada.git', branch: 'main'
+                git url: 'https://github.com/joaco0o0/obligatorioPAvanzada.git', branch: 'main'
             }
         }
 
