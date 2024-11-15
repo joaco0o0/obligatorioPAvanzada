@@ -16,7 +16,7 @@ pipeline {
                     echo "Directorio actual: ${pwd()}"
 
                     // Entrar al directorio obligatorioPAvanzada antes de acceder al proyecto
-                    dir("obligatorioPAvanzada/${params.PROJECT}") {
+                    dir("${params.PROJECT}") {
 
                         echo "Contenido del directorio ${params.PROJECT}:"
                         bat('dir /B')
