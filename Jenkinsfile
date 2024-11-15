@@ -17,12 +17,12 @@ pipeline {
                     script {
                         dir ("obligatorioPAvanzada/${params.PROJECT}"){
                             if (params.PROJECT == 'USQL') {
-                                sh('python3 -m pip install ply')
+                                sh('python -m pip install ply')
 
                             } 
                             
                             else if (params.PROJECT == 'TRIVIA') {
-                                sh('python3 -m pip install pandas')
+                                sh('python -m pip install pandas')
                             }
                         }
                     }
@@ -36,7 +36,7 @@ pipeline {
 
                         echo "Construyendo el proyecto ${params.PROJECT}..."
                         if (params.PROJECT == 'USQL') {
-                            sh ('python3 Test.py')
+                            sh ('python Test.py')
                         } 
                         else if (params.PROJECT == 'PEDIDOS') {
                             sh('javac -Xlint:unchecked Main.java')
@@ -44,7 +44,7 @@ pipeline {
                         }
 
                         else if (params.PROJECT == 'TRIVIA') {
-                            sh ('python3 main.py')
+                            sh ('python main.py')
                         }
                     }
                     
