@@ -33,7 +33,7 @@ pipeline {
                         echo "Compilando y ejecutando PEDIDOS..."
 
                         bat """
-                            javac -Xlint:unchecked -d C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\out ^
+                            javac -source 8 -target 8 -Xlint:unchecked -d C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\out ^
                             C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Main.java ^
                             C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Pedido\\Pedido.java ^
                             C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\Tarea.java ^
@@ -41,6 +41,7 @@ pipeline {
                             C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\ProcesamientoPago.java ^
                             C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\EmpaquetadoPedidos.java ^
                             C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\Envio.java
+
                         """
 
                         bat('java -cp C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\out org.example.Main')
