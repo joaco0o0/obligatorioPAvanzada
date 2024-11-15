@@ -27,28 +27,28 @@ pipeline {
 
                     if (params.PROJECT == 'USQL') {
                         echo "Ejecutando tests para USQL..."
-                        bat('python C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\USQL\\tests.py')
+                        bat('python USQL\\tests.py')
                     } 
                     else if (params.PROJECT == 'PEDIDOS') {
                         echo "Compilando y ejecutando PEDIDOS..."
 
                         bat """
-                            javac -source 8 -target 8 -Xlint:unchecked -d C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\out ^
-                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Main.java ^
-                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Pedido\\Pedido.java ^
-                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\Tarea.java ^
-                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\ProcesadorPedidos.java ^
-                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\ProcesamientoPago.java ^
-                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\EmpaquetadoPedidos.java ^
-                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\Envio.java
+                            javac -source 8 -target 8 -Xlint:unchecked -d PEDIDOS\\out ^
+                            PEDIDOS\\src\\main\\java\\org\\example\\Main.java ^
+                            PEDIDOS\\src\\main\\java\\org\\example\\Pedido\\Pedido.java ^
+                            PEDIDOS\\src\\main\\java\\org\\example\\Processing\\Tarea.java ^
+                            PEDIDOS\\src\\main\\java\\org\\example\\Processing\\ProcesadorPedidos.java ^
+                            PEDIDOS\\src\\main\\java\\org\\example\\Processing\\ProcesamientoPago.java ^
+                            PEDIDOS\\src\\main\\java\\org\\example\\Processing\\EmpaquetadoPedidos.java ^
+                            PEDIDOS\\src\\main\\java\\org\\example\\Processing\\Envio.java
 
                         """
 
-                        bat('java -cp C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\out org.example.Main')
+                        bat('java -cp PEDIDOS\\out org.example.Main')
                     }
                     else if (params.PROJECT == 'TRIVIA') {
                         echo "Ejecutando TRIVIA..."
-                        bat('python C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\TRIVIA\\main.py')
+                        bat('python TRIVIA\\main.py')
                     }
                 }
             }
