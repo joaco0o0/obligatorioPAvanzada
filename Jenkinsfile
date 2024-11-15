@@ -12,7 +12,7 @@ pipeline {
         stage('Instalar dependencias') {
                 steps {
                     script {
-                        dir ("PA_Final/${params.PROJECT}"){
+                        dir ("/${params.PROJECT}"){
                             if (params.PROJECT == 'TRIVIA') {
                                 bat ('python -m pip install pandas')
                                 bat('dir TRIVIA')
