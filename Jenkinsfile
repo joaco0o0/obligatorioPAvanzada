@@ -41,8 +41,9 @@ pipeline {
                         if (params.PROJECT == 'USQL') {
                             bat('python tests.py')
                         } else if (params.PROJECT == 'PEDIDOS') {
-                            bat('javac -Xlint:unchecked Main.java')
-                            bat('java Main')
+                            bat('mkdir bin')
+                            bat('javac -d bin src\\main\\java\\org\\example\\Main.java')
+                            bat('java -cp bin org.example.Main')
                         } else if (params.PROJECT == 'TRIVIA') {
                             bat('python main.py')
                         }
