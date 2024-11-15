@@ -7,13 +7,12 @@ pipeline {
     environment {
         JAVA_HOME = "C:/Program Files/Java/jdk-21"
         PATH = "${JAVA_HOME}/bin;${env.PATH}"
-        PATH = "C:/Users/jhere/AppData/Local/Microsoft/WindowsApps;${env.PATH}"
     }
     
     stages {
         stage('Verificar Python') {
             steps {
-                bat 'C:/Users/jhere/AppData/Local/Microsoft/WindowsApps/python3.exe --version'
+                bat 'python3 --version'
             }
         }
         stage('Instalar dependencias') {
