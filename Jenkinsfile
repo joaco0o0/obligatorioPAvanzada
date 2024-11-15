@@ -10,6 +10,11 @@ pipeline {
     }
     
     stages {
+        stage('Imprimir PATH') {
+            steps {
+            bat 'echo %PATH%'
+        }
+}
         stage('Verificar Python') {
             steps {
                 bat 'python --version'
