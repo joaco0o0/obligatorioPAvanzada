@@ -35,7 +35,7 @@ pipeline {
                         bat """
                             javac -source 8 -target 8 -Xlint:unchecked -d PEDIDOS\\out ^
                             PEDIDOS\\src\\main\\java\\org\\example\\Main.java ^
-                            PEDIDOS\\src\\main\\java\org\\example\\Pedido\\Pedido.java ^
+                            PEDIDOS\\src\\main\\java\\org\\example\\Pedido\\Pedido.java ^
                             PEDIDOS\\src\\main\\java\\org\\example\\Processing\\Tarea.java ^
                             PEDIDOS\\src\\main\\java\\org\\example\\Processing\\ProcesadorPedidos.java ^
                             PEDIDOS\\src\\main\\java\\org\\example\\Processing\\ProcesamientoPago.java ^
