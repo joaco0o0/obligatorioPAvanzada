@@ -33,7 +33,7 @@ pipeline {
                         echo "Compilando y ejecutando PEDIDOS..."
 
                         bat """
-                            javac -source 8 -target 8 -Xlint:unchecked -d PEDIDOS\\out ^
+                            javac -source 8 -target 8 -Xlint:unchecked -d C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\out ^
                             PEDIDOS\\src\\main\\java\\org\\example\\Main.java ^
                             PEDIDOS\\src\\main\\java\\org\\example\\Pedido\\Pedido.java ^
                             PEDIDOS\\src\\main\\java\\org\\example\\Processing\\Tarea.java ^
