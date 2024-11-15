@@ -20,39 +20,47 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                script {
-                    echo "Directorio actual: ${pwd()}"
+    stage('Build') {
+        steps {
+            script {
+                echo "Current directory: ${pwd()}"
 
-                    if (params.PROJECT == 'USQL') {
-                        echo "Ejecutando tests para USQL..."
-                        bat('python C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\USQL\\tests.py')
-                    } 
-                    else if (params.PROJECT == 'PEDIDOS') {
-                        echo "Compilando y ejecutando PEDIDOS..."
+                switch(params.PROJECT) {
+                    case 'USQL':
+                        echo "Running USQL tests..."
+                        bat "python .\\USQL\\tests.py"
+                        break
+
+                    case 'PEDIDOS':
+                        echo "Building and running PEDIDOS..."
+                        def srcFiles = [
+                            'Main',
+                            'Pedido/Pedido',
+                            'Processing/Tarea',
+                            'Processing/ProcesadorPedidos',
+                            'Processing/ProcesamientoPago',
+                            'Processing/EmpaquetadoPedidos',
+                            'Processing/Envio'
+                        ].collect { ".\\PEDIDOS\\src\\main\\java\\org\\example\\${it}.java" }.join(' ^\n        ')
 
                         bat """
-                            javac -source 8 -target 8 -Xlint:unchecked -d C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\out ^
-                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Main.java ^
-                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Pedido\\Pedido.java ^
-                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\Tarea.java ^
-                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\ProcesadorPedidos.java ^
-                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\ProcesamientoPago.java ^
-                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\EmpaquetadoPedidos.java ^
-                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\Envio.java
-
+                            javac -source 8 -target 8 -Xlint:unchecked -d .\\PEDIDOS\\out ^
+                            ${srcFiles}
                         """
+                        bat "java -cp .\\PEDIDOS\\out org.example.Main"
+                        break
 
-                        bat('java -cp C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\out org.example.Main')
-                    }
-                    else if (params.PROJECT == 'TRIVIA') {
-                        echo "Ejecutando TRIVIA..."
-                        bat('python C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\TRIVIA\\main.py')
-                    }
+                    case 'TRIVIA':
+                        echo "Running TRIVIA..."
+                        bat ".\\TRIVIA\\main.py"
+                        break
+
+                    default:
+                        error "Unknown project: ${params.PROJECT}"
                 }
             }
         }
+    }
 
         stage('Deploy') {
             steps {
