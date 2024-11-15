@@ -39,7 +39,7 @@ pipeline {
                     dir("obligatorioPAvanzada/${params.PROJECT}") {
                         echo "Construyendo el proyecto ${params.PROJECT}..."
                         if (params.PROJECT == 'USQL') {
-                            bat('python Test.py')
+                            bat('python tests.py')
                         } else if (params.PROJECT == 'PEDIDOS') {
                             bat('javac -Xlint:unchecked Main.java')
                             bat('java Main')
