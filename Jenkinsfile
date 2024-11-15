@@ -42,7 +42,11 @@ pipeline {
                             bat('python tests.py')
                         } else if (params.PROJECT == 'PEDIDOS') {
                             bat('mkdir bin')
-                            bat('javac -d bin src\\main\\java\\org\\example\\Main.java')
+                            // Compile all Java source files
+                            bat('for /r %f in (*.java) do @echo %f >> sources.txt')
+                            bat('type sources.txt')
+                            bat('javac -d bin @sources.txt')
+                            // Run the Main class
                             bat('java -cp bin org.example.Main')
                         } else if (params.PROJECT == 'TRIVIA') {
                             bat('python main.py')
