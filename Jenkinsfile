@@ -12,15 +12,15 @@ pipeline {
 
                         echo "Construyendo el proyecto ${params.PROJECT}..."
                         if (params.PROJECT == 'USQL') {
-                            sh ('python tests.py')
+                            bat ('python tests.py')
                         } 
                         else if (params.PROJECT == 'PEDIDOS') {
-                            sh('javac -Xlint:unchecked Main.java')
-                            sh('java Main')
+                            bat('javac -Xlint:unchecked Main.java')
+                            bat('java Main')
                         }
 
                         else if (params.PROJECT == 'TRIVIA') {
-                            sh ('python main.py')
+                            bat ('python main.py')
                         }
                     }
                     
