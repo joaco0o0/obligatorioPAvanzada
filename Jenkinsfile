@@ -13,8 +13,8 @@ pipeline {
                 steps {
                     script {
                         dir ("PA_Final/${params.PROJECT}"){
-                            if (params.PROJECT == 'UDSL') {
-                                sh('python -m pip install ply')
+                            if (params.PROJECT == 'TRIVIA') {
+                                bat ('python -m pip install pandas')
 
                             } 
                         }
