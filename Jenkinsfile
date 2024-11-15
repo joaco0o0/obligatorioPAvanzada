@@ -10,49 +10,50 @@ pipeline {
     }
     stages {
         stages {
-        stage('Verificar Python') {
-            steps {
-                bat 'C:/Users/jhere/AppData/Local/Microsoft/WindowsApps/python3.exe --version'
+            stage('Verificar Python') {
+                steps {
+                    bat 'C:/Users/jhere/AppData/Local/Microsoft/WindowsApps/python3.exe --version'
+                }
             }
-        }
-        stage('Instalar dependencias') {
-            steps {
-                script {
-                    dir ("obligatorioPAvanzada/${params.PROJECT}") {
-                        if (params.PROJECT == 'USQL') {
-                            bat('python -m pip install ply')
-                        } 
-                        else if (params.PROJECT == 'TRIVIA') {
-                            bat('python -m pip install pandas')
+            stage('Instalar dependencias') {
+                steps {
+                    script {
+                        dir ("obligatorioPAvanzada/${params.PROJECT}") {
+                            if (params.PROJECT == 'USQL') {
+                                bat('python -m pip install ply')
+                            } 
+                            else if (params.PROJECT == 'TRIVIA') {
+                                bat('python -m pip install pandas')
+                            }
                         }
                     }
                 }
             }
-        }
-        stage('Build') {
-            steps {
-                script {
-                    dir("obligatorioPAvanzada/${params.PROJECT}") {
-                        echo "Construyendo el proyecto ${params.PROJECT}..."
-                        if (params.PROJECT == 'USQL') {
-                            bat('python Test.py')
-                        } 
-                        else if (params.PROJECT == 'PEDIDOS') {
-                            bat('javac -Xlint:unchecked Main.java')
-                            bat('java Main')
-                        }
-                        else if (params.PROJECT == 'TRIVIA') {
-                            bat('python main.py')
+            stage('Build') {
+                steps {
+                    script {
+                        dir("obligatorioPAvanzada/${params.PROJECT}") {
+                            echo "Construyendo el proyecto ${params.PROJECT}..."
+                            if (params.PROJECT == 'USQL') {
+                                bat('python Test.py')
+                            } 
+                            else if (params.PROJECT == 'PEDIDOS') {
+                                bat('javac -Xlint:unchecked Main.java')
+                                bat('java Main')
+                            }
+                            else if (params.PROJECT == 'TRIVIA') {
+                                bat('python main.py')
+                            }
                         }
                     }
                 }
             }
-        }
-        stage('Deploy') {
-            steps {
-                script {
-                    dir("obligatorioPAvanzada/${params.PROJECT}") {
-                        echo "Desplegando el proyecto ${params.PROJECT}..."
+            stage('Deploy') {
+                steps {
+                    script {
+                        dir("obligatorioPAvanzada/${params.PROJECT}") {
+                            echo "Desplegando el proyecto ${params.PROJECT}..."
+                        }
                     }
                 }
             }
