@@ -65,10 +65,9 @@ def menu_juego(df_frecuente: pd.DataFrame):
         print_monda("1. Iniciar Juego")
         print_monda("2. Salir")
         
-        # Detecta si el script se está ejecutando en un entorno no interactivo
         if not sys.stdin.isatty():
-            print_monda("Entorno no interactivo detectado. Seleccionando opción '1' por defecto.")
-            opcion = '1'  # Selecciona la opción 'Iniciar Juego' por defecto
+            print_monda("Entorno no interactivo detectado. Seleccionando opción '2' por defecto.")
+            opcion = '2'  
         else:
             opcion = input("Seleccione una opción: ")
         
