@@ -12,9 +12,9 @@ pipeline {
     stages {
         stage('Imprimir PATH') {
             steps {
-            bat 'echo %PATH%'
+                bat 'echo %PATH%'
+            }
         }
-}
         stage('Verificar Python') {
             steps {
                 bat 'python --version'
@@ -23,7 +23,7 @@ pipeline {
         stage('Instalar dependencias') {
             steps {
                 script {
-                    dir ("obligatorioPAvanzada/${params.PROJECT}") {
+                    dir("${params.PROJECT}") {
                         if (params.PROJECT == 'USQL') {
                             bat('python -m pip install ply')
                         } else if (params.PROJECT == 'TRIVIA') {
@@ -36,7 +36,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    dir("obligatorioPAvanzada/${params.PROJECT}") {
+                    dir("${params.PROJECT}") {
                         echo "Construyendo el proyecto ${params.PROJECT}..."
                         if (params.PROJECT == 'USQL') {
                             bat('python tests.py')
@@ -53,7 +53,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    dir("obligatorioPAvanzada/${params.PROJECT}") {
+                    dir("${params.PROJECT}") {
                         echo "Desplegando el proyecto ${params.PROJECT}..."
                     }
                 }
