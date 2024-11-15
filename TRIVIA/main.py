@@ -8,6 +8,7 @@ from question_selection import seleccionar_pregunta, seleccionar_respuestas_inco
 from tuple_classification import leer_dataframe_generador, clasificar_tuplas
 from monada import Monda, print_monda
 from typing import Tuple, List, Generator
+import sys
 
 def cronometro(func):
     def wrapper(*args, **kwargs):
@@ -63,7 +64,13 @@ def menu_juego(df_frecuente: pd.DataFrame):
         print_monda("\nMenú del Juego de Preguntas")
         print_monda("1. Iniciar Juego")
         print_monda("2. Salir")
-        opcion = input("Seleccione una opción: ")
+        
+        if not sys.stdin.isatty():
+            print_monda("Entorno no interactivo detectado. Seleccionando opción '2' por defecto.")
+            opcion = '2'  
+        else:
+            opcion = input("Seleccione una opción: ")
+        
         if opcion == '1':
             puntaje = iniciar_juego(df_frecuente)
             print_monda(f"Gracias por jugar. Tu puntaje final es: {puntaje}")
@@ -73,8 +80,9 @@ def menu_juego(df_frecuente: pd.DataFrame):
         else:
             print_monda("Opción no válida. Por favor, seleccione 1 o 2.")
 
+
 def main():
-    df = cargar_datos('TRIVIA\JEOPARDY_CSV.csv')
+    df = cargar_datos(r'TRIVIA\JEOPARDY_CSV.csv')
     df_frecuente = filtrar_categorias_frecuentes(df)
     diccionario_categorias = crear_diccionario_categorias(df_frecuente)
     menu_juego(df_frecuente)

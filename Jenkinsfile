@@ -1,108 +1,80 @@
 pipeline {
     agent any
-
-    environment {
-        TRIVIA_DIR = 'TRIVIA'
-        PEDIDOS_DIR = 'PEDIDOS'
-        USQL_DIR = 'USQL'
-        GITHUB_REPO = 'https://github.com/joaco0o0/obligatorioPAvanzada.git'
-        GITHUB_BRANCH = 'main'
+    parameters {
+        choice(name: 'PROJECT', choices: ['USQL', 'PEDIDOS', 'TRIVIA'], description: 'Seleccione el proyecto a ejecutar')
     }
-
     stages {
         stage('Checkout') {
             steps {
+                git url: 'https://github.com/joaco0o0/obligatorioPAvanzada.git', branch: 'main'
+            }
+        }
+
+        stage('Instalar dependencias') {
+            steps {
                 script {
-                    try {
-                        echo 'Checking out GitHub repository...'
-                        checkout([
-                            $class: 'GitSCM',
-                            branches: [[name: "*/${GITHUB_BRANCH}"]],
-                            userRemoteConfigs: [[
-                                url: "${GITHUB_REPO}",
-                                credentialsId: 'github-credentials'
-                            ]]
-                        ])
-                    } catch (Exception e) {
-                        error "GitHub checkout failed: ${e.getMessage()}"
+                    if (params.PROJECT == 'TRIVIA' || params.PROJECT == 'USQL') {
+                        bat ('python -m pip install pandas')
                     }
                 }
             }
         }
 
-        stage('Git Config') {
+        stage('Build') {
             steps {
                 script {
-                    try {
-                        bat 'git config --global core.autocrlf true'
-                        bat 'git config --global --list'
-                    } catch (Exception e) {
-                        echo "Warning: Git configuration failed: ${e.getMessage()}"
+                    echo "Directorio actual: ${pwd()}"
+
+                    if (params.PROJECT == 'USQL') {
+                        echo "Ejecutando tests para USQL..."
+                        bat('python C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\USQL\\tests.py')
+                    } 
+                    else if (params.PROJECT == 'PEDIDOS') {
+                        echo "Compilando y ejecutando PEDIDOS..."
+
+                        bat """
+                            javac -source 8 -target 8 -Xlint:unchecked -d C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\out ^
+                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Main.java ^
+                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Pedido\\Pedido.java ^
+                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\Tarea.java ^
+                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\ProcesadorPedidos.java ^
+                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\ProcesamientoPago.java ^
+                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\EmpaquetadoPedidos.java ^
+                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\Envio.java
+
+                        """
+
+                        bat('java -cp C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\out org.example.Main')
+                    }
+                    else if (params.PROJECT == 'TRIVIA') {
+                        echo "Ejecutando TRIVIA..."
+                        bat('python C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\TRIVIA\\main.py')
                     }
                 }
             }
         }
 
-        stage('Compilar') {
+        stage('Deploy') {
             steps {
-                script {
-                    try {
-                        echo 'Compilando...'
-                        dir('C:\Users\MARIO\Desktop\Escritorio\2024\Segundo_Semestre\ProgAvz\EntregaFinal\obligatorioPAvanzada') {
-                            bat 'mvn clean install -DskipTests'
-                        }
-                        bat 'mvn clean install -DskipTests'
-                    } catch (Exception e) {
-                        error "Error en compilación: ${e.getMessage()}"
-                    }
-                }
+                echo "Desplegando el proyecto ${params.PROJECT}..."
             }
         }
+    }
 
-        stage('Construir Trivia') {
-            steps {
-                script {
-                    try {
-                        dir("${TRIVIA_DIR}") {
-                            echo 'Construyendo módulo Trivia...'
-                            bat 'mvn clean package -DskipTests'
-                        }
-                    } catch (Exception e) {
-                        error "Error en construcción de Trivia: ${e.getMessage()}"
-                    }
-                }
-            }
+    post {
+        success {
+            emailext(
+                to: 'jheredero@correo.um.edu.uy.com',
+                subject: "Pipeline completado: ${params.PROJECT}",
+                body: """<p>El pipeline de <b>${params.PROJECT}</b> ha finalizado correctamente. :) </p>"""
+            )
         }
-
-        stage('Construir Pedidos') {
-            steps {
-                script {
-                    try {
-                        dir("${PEDIDOS_DIR}") {
-                            echo 'Construyendo módulo Pedidos...'
-                            bat 'mvn clean package -DskipTests'
-                        }
-                    } catch (Exception e) {
-                        error "Error en construcción de Pedidos: ${e.getMessage()}"
-                    }
-                }
-            }
-        }
-
-        stage('Construir USQL') {
-            steps {
-                script {
-                    try {
-                        dir("${USQL_DIR}") {
-                            echo 'Construyendo módulo USQL...'
-                    
-                            bat 'mvn clean package -DskipTests'
-                        }
-                    } catch (Exception e) {
-                        error "Error en construcción de USQL: ${e.getMessage()}"
-                    }
-                }
-            }
+        failure {
+            emailext(
+                to: 'jheredero@correo.um.edu.uy.com',
+                subject: "Pipeline fallido: ${params.PROJECT}",
+                body: """<p>El pipeline de <b>${params.PROJECT}</b> falló. :( </p>"""
+            )
         }
     }
 }

@@ -1,14 +1,10 @@
 package org.example.Processing;
 
-import org.example.Pedido.Pedido;
-
 public class Envio extends Tarea {
 
     public Envio(int pedido, boolean isUrgente) {
         super(pedido, isUrgente);
     }
-
-
 
     @Override
     public void run() {
