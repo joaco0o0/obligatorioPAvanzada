@@ -74,7 +74,7 @@ def menu_juego(df_frecuente: pd.DataFrame):
             print_monda("Opción no válida. Por favor, seleccione 1 o 2.")
 
 def main():
-    df = cargar_datos('TRIVIA\JEOPARDY_CSV.csv')
+    df = cargar_datos(r'TRIVIA\JEOPARDY_CSV.csv')
     df_frecuente = filtrar_categorias_frecuentes(df)
     diccionario_categorias = crear_diccionario_categorias(df_frecuente)
     menu_juego(df_frecuente)
