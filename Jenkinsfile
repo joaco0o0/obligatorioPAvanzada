@@ -12,7 +12,7 @@ pipeline {
 
                         echo "Construyendo el proyecto ${params.PROJECT}..."
                         if (params.PROJECT == 'USQL') {
-                            sh ('python3 tests.py')
+                            sh ('python tests.py')
                         } 
                         else if (params.PROJECT == 'PEDIDOS') {
                             sh('javac -Xlint:unchecked Main.java')
@@ -20,7 +20,7 @@ pipeline {
                         }
 
                         else if (params.PROJECT == 'TRIVIA') {
-                            sh ('python3 main.py')
+                            sh ('python main.py')
                         }
                     }
                     
