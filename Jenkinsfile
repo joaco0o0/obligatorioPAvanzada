@@ -15,7 +15,6 @@ pipeline {
                         dir ("PA_Final/${params.PROJECT}"){
                             if (params.PROJECT == 'TRIVIA') {
                                 bat ('python -m pip install pandas')
-                                bat('pip install pandas')
                                 bat('dir TRIVIA')
 
                             } 
