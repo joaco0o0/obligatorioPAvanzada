@@ -66,12 +66,12 @@ pipeline {
             emailext(
                 to: 'jherede@gmail.com',
                 subject: "Pipeline completado: ${params.PROJECT}",
-                body: """El pipeline de ${params.PROJECT} ha finalizado correctamente. :) </p>"""
+                body: """El pipeline de ${params.PROJECT} ha finalizado correctamente. :) """
             )
             emailext(
                 to: 'mariogcarminatti@gmail.com',
                 subject: "Pipeline completado: ${params.PROJECT}",
-                body: """<p>El pipeline de ${params.PROJECT} ha finalizado correctamente. :) </p>"""
+                body: """<p>El pipeline de ${params.PROJECT} ha finalizado correctamente. :) """
             )
         }
         failure {
