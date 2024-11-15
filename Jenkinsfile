@@ -7,6 +7,7 @@ pipeline {
     environment {
         JAVA_HOME = "C:/Program Files/Java/jdk-21"
         PATH = "${JAVA_HOME}/bin;${env.PATH}"
+        PATH = "C:/Users/jhere/AppData/Local/Microsoft/WindowsApps;${env.PATH}"
     }
     
     stages {
