@@ -35,6 +35,8 @@ pipeline {
                         bat """
                             javac -Xlint:unchecked -d C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\out ^
                             C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Main.java ^
+                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Pedido\\Pedido.java ^
+                            C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\Tarea.java ^
                             C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\ProcesadorPedidos.java ^
                             C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\ProcesamientoPago.java ^
                             C:\\Users\\jhere\\OneDrive\\Documentos\\GitHub\\obligatorioPAvanzada\\PEDIDOS\\src\\main\\java\\org\\example\\Processing\\EmpaquetadoPedidos.java ^
