@@ -2,7 +2,7 @@ package org.example.Processing;
 
 
 public class ProcesamientoPago extends Tarea {
-
+    private static final int SLEEP_TIME = 20;
     public ProcesamientoPago(int pedido, boolean isUrgente) {
         super(pedido, isUrgente);
     }
@@ -12,9 +12,9 @@ public class ProcesamientoPago extends Tarea {
     @Override
     public void run() {
         try {
-            System.out.println(this.pedido + " Pago en ejecucion :" + this.isUrgente);
-            Thread.sleep(20);
-            System.out.println(this.pedido + " Pago completed :" + this.isUrgente);
+            logTaskExecution("Pago en ejecucion");
+            Thread.sleep(SLEEP_TIME);
+            logTaskExecution("Pago completado");
         }catch (InterruptedException interruptedException){
             Thread.currentThread().interrupt();
             throw new RuntimeException(interruptedException);

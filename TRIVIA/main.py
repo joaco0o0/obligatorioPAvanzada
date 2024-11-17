@@ -9,6 +9,9 @@ from tuple_classification import leer_dataframe_generador, clasificar_tuplas
 from monada import Monda, print_monda
 from typing import Tuple, List, Generator
 import sys
+CANT_PREGUNTAS=5
+VALOR_PREGUNTA=10
+
 
 def cronometro(func):
     def wrapper(*args, **kwargs):
@@ -28,10 +31,10 @@ def generar_preguntas(df_frecuente: pd.DataFrame) -> Generator[Tuple[pd.Series, 
 
 @cronometro
 def iniciar_juego(df_frecuente: pd.DataFrame) -> int:
-    puntajes = [0] * 5  # Lista inicializada con ceros para almacenar puntajes de cada pregunta
+    puntajes = [0] * CANT_PREGUNTAS  
     generador = generar_preguntas(df_frecuente)
     
-    for i in range(5):  # Hacer exactamente 5 preguntas
+    for i in range(CANT_PREGUNTAS):  
         pregunta, opciones = next(generador)
         random.shuffle(opciones)
         print_monda(f"\nPregunta {i + 1}: {pregunta['Question']}")
@@ -50,7 +53,7 @@ def iniciar_juego(df_frecuente: pd.DataFrame) -> int:
 
         if opciones[respuesta_seleccionada - 1] == pregunta['Answer']:
             print_monda("¡Correcto!")
-            puntajes[i] = 10  # Si es correcto, asigna 10 puntos en la posición correspondiente
+            puntajes[i] = VALOR_PREGUNTA  
         else:
             print_monda(f"Incorrecto. La respuesta correcta era: {pregunta['Answer']}")
     

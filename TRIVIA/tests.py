@@ -9,7 +9,7 @@ from tuple_classification import leer_dataframe_generador, clasificar_tuplas
 class TestJeopardyGame(unittest.TestCase):
     def setUp(self):
         # Cargar el DataFrame con los datos del juego
-        self.df = cargar_datos('JEOPARDY_CSV.csv')
+        self.df = cargar_datos('TRIVIA\JEOPARDY_CSV.csv')
         self.df_frecuente = filtrar_categorias_frecuentes(self.df, min_count=1)
 
     @patch('builtins.input', side_effect=['1', '1', '2', '1', '3'])  # Mocking 5 user inputs
@@ -27,7 +27,7 @@ class TestJeopardyGame(unittest.TestCase):
         self.assertTrue(mock_print.called)
 
     def test_cargar_datos(self):
-        df = cargar_datos('JEOPARDY_CSV.csv')
+        df = cargar_datos('TRIVIA\JEOPARDY_CSV.csv')
         self.assertIsInstance(df, pd.DataFrame)
 
     def test_filtrar_categorias_frecuentes(self):

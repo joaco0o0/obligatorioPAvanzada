@@ -1,9 +1,7 @@
 package org.example.Processing;
 
-
-import org.example.Pedido.Pedido;
-
 public class EmpaquetadoPedidos extends Tarea {
+    private static final int SLEEP_TIME = 20;
 
     public EmpaquetadoPedidos(int pedido, boolean isUrgente) {
         super(pedido, isUrgente);
@@ -12,9 +10,9 @@ public class EmpaquetadoPedidos extends Tarea {
     @Override
     public void run() {
         try {
-            System.out.println(this.pedido + " Empaquetado en proceso:" + this.isUrgente);
-            Thread.sleep(20);
-            System.out.println(this.pedido + " Empaquetado completed :" + this.isUrgente);
+            logTaskExecution("Empaquetado Comenzado");
+            Thread.sleep(SLEEP_TIME);
+            logTaskExecution("Empaquetado Completado");
         }catch (InterruptedException interruptedException){
             Thread.currentThread().interrupt();
             throw new RuntimeException(interruptedException);

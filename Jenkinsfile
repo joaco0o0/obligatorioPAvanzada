@@ -6,7 +6,23 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/joaco0o0/obligatorioPAvanzada.git', branch: 'main'
+                git url: 'https://github.com/joaco0o0/obligatorioPAvanzada.git', branch: 'joaco'
+            }
+        }
+        stage('Verificar Python') {
+            steps {
+                script {
+                    try {
+                        bat 'python --version'
+                    } catch (Exception e) {
+                        echo "Python no encontrado. Procediendo a instalarlo..."
+                        bat '''
+                        curl -o python-installer.exe https://www.python.org/ftp/python/3.10.9/python-3.10.9-amd64.exe
+                        start /wait python-installer.exe /quiet InstallAllUsers=1 PrependPath=1
+                        del python-installer.exe
+                        '''
+                    }
+                }z
             }
         }
 

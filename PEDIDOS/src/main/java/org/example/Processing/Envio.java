@@ -1,7 +1,7 @@
 package org.example.Processing;
 
 public class Envio extends Tarea {
-
+    private static final int SLEEP_TIME = 20;
     public Envio(int pedido, boolean isUrgente) {
         super(pedido, isUrgente);
     }
@@ -9,9 +9,9 @@ public class Envio extends Tarea {
     @Override
     public void run() {
         try {
-            System.out.println(this.pedido + " Envio en ejecucion :" + this.isUrgente);
-            Thread.sleep(20);
-            System.out.println(this.pedido + " Envio completed :" + this.isUrgente);
+            logTaskExecution("Envio en ejecucion");
+            Thread.sleep(SLEEP_TIME);
+            logTaskExecution("Envio completado");
         }catch (InterruptedException interruptedException){
             Thread.currentThread().interrupt();
             throw new RuntimeException(interruptedException);
