@@ -9,6 +9,7 @@ pipeline {
                 git url: 'https://github.com/joaco0o0/obligatorioPAvanzada.git', branch: 'entrega'
             }
         }
+        /*
         stage('Verificar Python') {
             steps {
                 script {
@@ -22,10 +23,10 @@ pipeline {
                         del python-installer.exe
                         '''
                     }
-                }z
+                }
             }
         }
-
+*/	
         stage('Instalar dependencias') {
             steps {
                 script {
