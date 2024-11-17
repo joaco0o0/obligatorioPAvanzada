@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/joaco0o0/obligatorioPAvanzada.git', branch: 'joaco'
+                git url: 'https://github.com/joaco0o0/obligatorioPAvanzada.git', branch: 'entrega'
             }
         }
         stage('Verificar Python') {
